@@ -1,0 +1,20 @@
+#!/bin/bash
+
+options=(
+  style=round
+  width=6.0
+  hidpi=off
+  active_color=0xddcba6f7
+  inactive_color=0x50b4befe
+)
+
+# Catpuccin
+# #b4befe #lavender
+# #a6e3a1 #green
+# #74c7ec #sapphire
+# #cba6f7 #mauve
+#
+
+#d20f39
+#e64553
+borders "${options[@]}"
