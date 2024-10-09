@@ -10,6 +10,10 @@ yabai -m config window_placement second_child
 
 yabai -m config mouse_follows_focus on
 
+# ANimations??
+
+# yabai -m config window_animation_duration  0.5            \
+#                 window_animation_easing    ease_out_quint
 
 # Trying to fix arc and yabai weird interation
 # Trying to fix the issue, when mouse clicks on Arc's PIP window, it moves cursor to bottom left corner
@@ -74,18 +78,12 @@ yabai -m config mouse_follows_focus on
 
 
 # When a window is closed, focus on the recent window
+yabai -m signal --add event=window_destroyed \
+  action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
 
- yabai -m signal --add event=window_focused \
-   action="echo 'window is focused on: $(echo $YABAI_WINDOW_ID)' && echo \$YABAI_WINDOW_ID  "
 
-# Track the most recently focused window, in the file ~/.yabai_recent_window
-yabai -m signal --add event=window_focused action="echo Window focused with ID: \$YABAI_WINDOW_ID && echo \$YABAI_WINDOW_ID > ~/.yabai_recent_window"
-# Focus on the recent window if it's still available
-# yabai -m signal --add event=window_destroyed 
-#   action="echo 'CONF/ window destroyed' && echo Reading recent_window_file: $(yabai -m query --windows --window $(cat ~/.yabai_recent_window)) && if yabai -m query --windows --window $(cat ~/.yabai_recent_window); then yabai -m window --focus $(cat ~/.yabai_recent_window);"
 
-yabai -m signal --add event=window_destroyed 
-  action="CONF/ echo window is destroyed:!@#:!@#!@:#!@"
+
 
 # mouse settings
 
@@ -137,7 +135,8 @@ yabai -m config normal_window_opacity 0.5
 # yabai -m rule --add app="^Finder$" manage=off
 yabai -m rule --add app="^System Settings$" manage=off
 # yabai -m rule --add app="^Slack$" manage=off
-yabai -m rule --add app="^Java$" manage=off
+yabai -m rule --add app="^java$" manage=off
+yabai -m rule --add app="java" manage=off
 # yabai -m rule --add app="^Arc$" mouse_follows_focus=off
 # yabai -m rule --add app="^Arc$" focus_follows_mouse=off
 

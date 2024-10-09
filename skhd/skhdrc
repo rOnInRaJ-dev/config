@@ -8,8 +8,11 @@ alt - r: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ ran
 
 
 # Focus on the first window in the current space
-alt - f : yabai -m window --focus $(yabai -m query --windows --space | jq '.[] | .id' | head -n 1)
+# This old one focus on first window in space
+# alt - f : yabai -m window --focus $(yabai -m query --windows --space | jq '.[] | .id' | head -n 1)
 
+# 
+alt - f : yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)
 
 # Focus on the previous space
 ctrl - left : yabai -m space --focus prev

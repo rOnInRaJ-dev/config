@@ -27,8 +27,8 @@ $scala\
 [](fg:green bg:blue)\
 $docker_context\
 [](fg:blue bg:mauve)\
-$time\
-[ ](fg:mauve)\
+$time\ 
+$character
 """
 
 # Disable the blank line at the start of the prompt
@@ -64,6 +64,13 @@ base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
 
+
+# replace the last symbol color based on erorr or success
+# [ ](fg:mauve)\ # replaced with success or error character
+[character]
+success_symbol =  "[ ](fg:mauve)"
+error_symbol =    "[ ](fg:red)"
+disabled = false
 
 
 # You can also replace your username with a neat symbol like   or disable this
