@@ -8,6 +8,10 @@ export PATH=$PATH:/Users/raj/.config/drag
 export PATH=$PATH:/Users/raj/.spicetify
 export PATH=$PATH:/Applications/kitty.app/Contents/MacOs/kitty
 
+
+export MYUSERNAME="rOnInRaJ"
+
+
 # `VIVID` colorscheme
 # export LS_COLORS="$(vivid generate catppuccin-mocha)"
 # export LS_COLORS="$(cat log)"
