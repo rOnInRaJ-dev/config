@@ -6,9 +6,7 @@ format = """
 [](red)\
 $os\
 $username\
-[](bg:peach fg:red)\
 $directory\
-[](fg:peach bg:yellow)\
 $git_branch\
 $git_status\
 [](fg:yellow bg:green)\
@@ -27,7 +25,8 @@ $scala\
 [](fg:green bg:blue)\
 $docker_context\
 [](fg:blue bg:mauve)\
-$time\ 
+$time\
+$cmd_duration\
 $character
 """
 
@@ -79,18 +78,20 @@ disabled = false
 show_always = true
 style_user = "bg:red fg:crust"
 style_root = "bg:red"
-format = '[$user ]($style)'
+format = '[$user ]($style)[](bg:peach fg:red)'
 disabled = false
 
 # An alternative to the username module which displays a symbol that
 # represents the current operating system
 [os]
-style = "bg:#9A348E"
+style = "bg:red fg:crust"
 disabled = true # Disabled by default
 
 [directory]
 style = "bg:peach fg:crust"
-format = "[ $path ]($style)"
+format = "[ $path ]($style)[](fg:peach bg:yellow)"
+repo_root_style = "bg:black fg:white"
+repo_root_format = "[$repo_root$path]($style)[](fg:peach bg:yellow)"
 truncation_length = 2
 truncation_symbol = "…/"
 
@@ -101,8 +102,8 @@ truncation_symbol = "…/"
 "Downloads" = " "
 "Music" = " "
 "Pictures" = " "
-"Library/CloudStorage/OneDrive-Personal" = "☁️"
-"Library/CloudStorage/OneDrive-Personal/Raj_school_work/UNIVERSITY/Year2" = "☁️"
+"Library/CloudStorage/OneDrive-Personal" = "☁️ "
+"Library/CloudStorage/OneDrive-Personal/Raj_school_work/UNIVERSITY/Year2" = "☁️ /Uni/Year2"
 
 # Keep in mind that the order matters. For example:
 # "Important Documents" = " 󰈙 "
@@ -134,10 +135,11 @@ format = '[ $symbol ($version) ]($style)'
 symbol = ""
 style = "bg:yellow fg:crust"
 format = '[ $symbol $branch ]($style)'
+ignore_branches = ["master", "main"]
 
 [git_status]
 style = "bg:yellow fg:crust"
-format = '[$all_status$ahead_behind ]($style)'
+format = '[ $all_status$ahead_behind ]($style)'
 
 [golang]
 symbol = " "
@@ -184,7 +186,12 @@ style = "bg:green fg:crust"
 format = '[ $symbol ($version) ]($style)'
 
 [time]
-disabled = false
+disabled = true
 time_format = "%R" # Hour:Minute Format
 style = "bg:mauve fg:crust"
-format = '[ ♥ $time ]($style)'
+format = '[ ♥ $time ]($style)[](fg:mauve bg:green)'
+
+[cmd_duration]
+style = "bg:mauve fg:crust"
+min_time = 500
+format = '[ $duration]($style)'
