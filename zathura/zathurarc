@@ -1,0 +1,10 @@
+set selection-clipboard clipboard
+unmap f
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+
+
+# Open document in fit-width mode by default
+set adjust-open "best-fit"
+set notification-fg "#151515" #00
+set window-title-basename true

@@ -9,25 +9,16 @@ export PATH=$PATH:/Users/raj/.spicetify
 export PATH=$PATH:/Applications/kitty.app/Contents/MacOs/kitty
 
 
+# using GNU `ls` instead of BSD `ls`
+alias ls='/opt/homebrew/opt/coreutils/libexec/gnubin/ls'
+
+
 export MYUSERNAME="rOnInRaJ"
 
 
 # `VIVID` colorscheme
 # export LS_COLORS="$(vivid generate catppuccin-mocha)"
-# export LS_COLORS="$(cat log)"
-# di=0;38;2;137;180;250:
-# fi=0:
-# ln=0;38;2;245;194;231:
-# pi=0;38;2;17;17;27;48;2;137;180;250:
-# so=0;38;2;17;17;27;48;2;245;194;231:
-# bd=0;38;2;116;199;236;48;2;49;50;68:
-# cd=0;38;2;245;194;231;48;2;49;50;68:
-# or=0;38;2;17;17;27;48;2;243;139;168:
-# mi=0;38;2;17;17;27;48;2;243;139;168:
-# ex=1;38;2;243;139;168:
-#
-# export LSCOLORS="$(python3 ~/programming_stuff/gnu2bsd/gnu2bsd.py)"
-# export LSCOLORS=ExFxCxDxBxegedabagacad
+export LS_COLORS="$(vivid generate one-dark)"
 
 #PATH FOR JAVAFX
 # export PATH=/usr/local/java/openjdk/[CHANGEME]/bin:$PATH
@@ -55,11 +46,11 @@ alias f='fuck'
 
 
 # alias yabai="/Users/raj/.config/yabai/src/yabai/bin/yabai"
-alias ls='ls -lh --color'
+alias ls='/opt/homebrew/opt/coreutils/libexec/gnubin/ls -lh --color'
 alias finder='open .; exit'
 alias yrs='yabai --restart-service'
 alias q='exit'
-alias n='nvim'
+alias n='nvim $(pwd)'
 
 
 # Setting up the starship
@@ -70,7 +61,7 @@ eval "$(starship init zsh)"
 export PATH="$PATH:/Users/raj/.local/bin"
 
 # export LSCOLORS="$(python3 ~/programming_stuff/gnu2bsd/gnu2bsd.py)"
-export LSCOLORS="exfxcxdxbxegedabagacad"
+# export LSCOLORS="exfxcxdxbxegedabagacad"
 
 # This the command run whenever zsh starts
 echo "\033[0;35mrOnInRaJ: Whats up motherfleckers\n"

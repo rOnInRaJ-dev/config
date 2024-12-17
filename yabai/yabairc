@@ -81,11 +81,11 @@ yabai -m signal --add event=window_destroyed \
   action="yabai -m window --focus recent"
 
 # Ignore the Arc Settings window which has a title '$MYUSERNAME'
-yabai -m signal --add \
-  event=window_created \
-  app='^Arc$' \
-  title='^rOnInRaJ$' \
-  action='yabai -m window $YABAI_WINDOW_ID --toggle float'
+# yabai -m signal --add \
+#   event=window_created \
+#   app='^Arc$' \
+#   title='^rOnInRaJ$' \
+#   action='yabai -m window $YABAI_WINDOW_ID --toggle float'
 
 
 # old method using the script stuff
@@ -157,9 +157,9 @@ yabai -m rule --add app="java" manage=off
 # yabai -m rule --add app="^Arc$" mouse_follows_focus=off
 # yabai -m rule --add app="^Arc$" focus_follows_mouse=off
 
-yabai -m rule --add app="^Arc$" subrole="AXSystemDialogRole" manage=off
-yabai -m rule --add app="^Arc$" subrole="AXSystemDialog" manage=off
-yabai -m rule --add app="^Arc$" title="\$MYUSERNAME" manage=off
+# yabai -m rule --add app="^Arc$" subrole="AXSystemDialogRole" manage=off
+# yabai -m rule --add app="^Arc$" subrole="AXSystemDialog" manage=off
+# yabai -m rule --add app="^Arc$" title="\$MYUSERNAME" manage=off
 
 
 

@@ -3,20 +3,18 @@
 shift + alt - y: yabai --start-service
 alt - y: yabai --stop-service
 
-alt - t: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
-alt - r: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ ranger
 
 
 # Focus on the first window in the current space
 # This old one focus on first window in space
 # alt - f : yabai -m window --focus $(yabai -m query --windows --space | jq '.[] | .id' | head -n 1)
-
-# 
 alt - f : yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)
 
 # Focus on the previous space
 ctrl - left : yabai -m space --focus prev
 
+
+# SHORTCUTS TO OPEN APPS
 
 # Shortcut to open mytodo.md with vim in terminal
 # alt - n : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ nvim mytodo.md
@@ -29,27 +27,17 @@ alt - v : /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ nv
 alt - a : open -a "Arc"
 
 # Shortcut to open Discord
-# alt - d : yabai -m space --focus 1 && open -a "Discord"
-# alt - d : open -a "Discord"
-
-# alt - d : osascript -e 'tell application "System Events" to key code 18 using control down'
 alt - d : /Users/raj/.config/skhd/switch_to_desktop_1.sh && open -a "Discord"
 
-# ctrl + 1 : osascript -e 'tell application "System Events" to key code 18 using control down'
-
-# tell application "System Events"
-#     key code 18 using control down -- This simulates pressing Control + 1
-# end tell
-
 # Shortcut to open Spotify
-alt - s : open -a "Spotify"
+alt - s : /Users/raj/.config/skhd/switch_to_desktop_1.sh && open -a "Spotify"
 
+# Shortcut to open kitty
+alt - t: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~
 
+# Shortcut to open ranger
+alt - r: /Applications/kitty.app/Contents/MacOS/kitty --single-instance -d ~ ranger
 
-
-
-# Shortcut to close windwo and press CMD-Tab
-# alt - w: skhd --key "cmd - w"; skhd --key "cmd -tab";
 
 
 # SHORTCUTS FOR YABAI WINDOW TILING MANAGER
@@ -75,7 +63,7 @@ ctrl + alt - l: yabai -m window --swap east
 
 
 # Move window within space
-shift + alt - h: yabai -m window --warp west  || $(yabai -m window --display west; yabai -m display --focus west)   
+shift + alt - h: yabai -m window --warp west   || $(yabai -m window --display west; yabai -m display --focus west)   
 shift + alt - j: yabai -m window --warp south || $(yabai -m window --display south; yabai -m display --focus south) 
 shift + alt - k: yabai -m window --warp north || $(yabai -m window --display north; yabai -m display --focus north) 
 shift + alt - l: yabai -m window --warp east  || $(yabai -m window --display east; yabai -m display --focus east)   
@@ -85,8 +73,17 @@ shift + alt - l: yabai -m window --warp east  || $(yabai -m window --display eas
 ctrl + alt + shift - h: yabai -m window --space prev
 ctrl + alt + shift - l: yabai -m window --space next
 
+# Toggle split
+ctrl + alt -s: yabai -m window --toggle split
 
-# change current space focused on
+# Choose where to insert a new window
+cmd + ctrl -h: yabai -m window --insert west
+cmd + ctrl -j: yabai -m window --insert south
+cmd + ctrl -k: yabai -m window --insert north
+cmd + ctrl -l: yabai -m window --insert east
+
+
+# change current space focused (DOESNT WORK)
 cmd + alt - x : yabai -m space --focus next
 alt - 1: yabai -m space --focus 1
 alt - 2: yabai -m space --focus 2

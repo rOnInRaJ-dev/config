@@ -22,7 +22,9 @@ vim.keymap.set(
 --this is the command i want to replicate using simple commadns instead of the <leader>
 -- map("n", "<leader>bd", LazyVim.ui.bufremove, { desc = "Delete Buffer" })
 --vim.keymap.set("n", "<cmd>:q<cr>", LazyVim.ui.bufremove, { desc = "Delete Buffer" })
-vim.keymap.set("n", "qq", LazyVim.ui.bufremove, {
+vim.keymap.set("n", "qq", function()
+  require("snacks").bufdelete()
+end, {
   desc = "Delete Buffer",
   noremap = true,
 })
@@ -35,8 +37,24 @@ vim.keymap.set("n", "U", "<C-r>", {
 
 -- Set J and K to jump up or down by 9 lines
 vim.keymap.set("n", "J", "9j")
--- vim.keymap.set("n", "K", "9k")
+vim.keymap.set("v", "J", "9j")
 
 vim.keymap.set("n", "K", function()
   vim.cmd("normal! 9k")
 end, { noremap = true, silent = true })
+
+vim.keymap.set("v", "K", function()
+  vim.cmd("normal! 9k")
+end, { noremap = true, silent = true })
+
+-- Set dm to delete mark at current line
+vim.keymap.set("n", "dm", function()
+  vim.cmd("normal! m-")
+end, { noremap = true, silent = true })
+
+-- Set / to search for exact
+vim.keymap.set("n", "/", "/\\v", { noremap = true, silent = true })
+
+-- YANKY keymaps
+vim.keymap.set("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
+vim.keymap.set("n", "<c-n>", "<Plug>(YankyNextEntry)")

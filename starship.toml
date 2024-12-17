@@ -91,7 +91,7 @@ disabled = true # Disabled by default
 style = "bg:peach fg:crust"
 format = "[ $path ]($style)[](fg:peach bg:yellow)"
 repo_root_style = "bg:black fg:white"
-repo_root_format = "[$repo_root$path]($style)[](fg:peach bg:yellow)"
+repo_root_format = "[ $repo_root$path]($style)[](fg:peach bg:yellow)"
 truncation_length = 2
 truncation_symbol = "…/"
 
