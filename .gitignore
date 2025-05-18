@@ -1,0 +1,6 @@
+# ignore the yabai source code that i pulled
+yabai/src
+
+
+# Ignore the .DS_Store files that are mac specific everywhere
+*.DS_Store

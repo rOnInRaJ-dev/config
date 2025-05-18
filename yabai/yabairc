@@ -1,166 +1,89 @@
-# alias yabai="/Users/raj/.config/yabai/src/yabai/bin/yabai"
+# Yabai configuration
 
 
-# bsp, stack or float
-yabai -m config layout bsp
+# Unload the macOS WindowManager process
+launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
 
-yabai -m config window_placement second_child
-
-
-yabai -m config mouse_follows_focus on
-
-# ANimations??
-
-# yabai -m config window_animation_duration  0.5            \
-#                 window_animation_easing    ease_out_quint
-
-# Trying to fix arc and yabai weird interation
-# Trying to fix the issue, when mouse clicks on Arc's PIP window, it moves cursor to bottom left corner
-# yabai -m rule --add title="^Picture in Picture$" manage=off mouse_follows_focus=off
-# yabai -m rule --add subrole="^AXSystemDialog$" manage=off mouse_follows_focus=off
-
-# apps=$(awk -v ORS='|' '{if($0!="") print $0}' $XDG_CONFIG_HOME/yabai/yabaimanaged)
-# yabai -m rule --add app!="^${apps%?}$" manage=off
-# yabai -m rule --add app="^(Arc)$" subrole="^AXSystemDialog$" manage=off mouse_follows_focus=off
-
-# Work around, when focusing on Arc, disable mouse_follows_focus for 10 seconds
- # yabai -m signal --add event=window_focused app="Arc" title="^$" \
- #   action="echo 'turn it off' && yabai -m config mouse_follows_focus off && sleep 10 && yabai -m config mouse_follows_focus on"
-
-# apps=$(awk -v ORS='|' '{if($0!="") print $0}' $XDG_CONFIG_HOME/yabai/yabaimanaged)
-# yabai -m rule --add app!="^${apps%?}$" manage=off
-# yabai -m rule --add app="^(Arc)$" subrole="^AXSystemDialog$" manage=off mouse_follows_focus=off
-
-# yabai -m rule --add app="^Arc$" title="^$" mouse_follows_focus=off
-# yabai -m rule --add app="^Arc$" subrole='AXSystemDialog' manage=off mouse_follows_focus=off
-
-# MY workaround to disable Arc PIP window focus
-# yabai -m signal --add event=window_created app="Arc" title="^$" \
-#   action="echo 'window is created: turn it off' && yabai -m config mouse_follows_focus off && sleep 10 && yabai -m config mouse_follows_focus on"
-
-# When A PIP window is created (by switching tabs in Arc), it has ID 77477. It is then moved, and resized.
-# However, When the window is clicked on: yabai creates a new window with different ID, at the bottom left corner, with size (10x10);
-
-# Observations:
-# 1. When the PIP window is created, an event signal is not created. instead it only calls the `window_manager_create_and_add_window` function.
-# 2. When the PIP window is created, the PIP window is not focused.
-# 3. When the PIP window is clicked on, a new window is created at the bottom left corner, with size (10x10), and the mouse goes there.
-# 4. No EVENT_HANDLER_WINDOW_CREATED event is created ever
-# 5. THE initial PIP window has dynamic id. the window created when clicking on PIP, has static id of 75447
-# 6. The corrupt window, id destroyed when changing focus, to another application. and is created again when clicking on PIP window with the same id.
-
-# testing it to change focus to the PIP window
- # yabai -m signal --add event=window_focused app="Arc" title="^$" \
- #   action="echo 'window is focused on: focus on recent' && yabai -m query --windows --space 3"
-
-# yabai -m rule --add app="^Arc$" subrole="AXSystemDialog" manage=off
+sudo yabai --load-sa
 
 
-# TEST IF THIS WORKS:
-#   Change this line in (application.c/line:7) from: 
-    # if (CFEqual(notification, kAXCreatedNotification)) {
-    # to:
-    # if (CFEqual(notification, kAXWindowCreatedNotification)) {
-# This will create the observer, only when a window is created, and not any UI element.
-# This works for the Arc PIP window, but still need to check if it works for other apps.
+# Signals
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
+yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+yabai -m signal --add event=window_created action="sketchybar --trigger space_windows_change"
+yabai -m signal --add event=window_destroyed action="sketchybar --trigger space_windows_change"
 
-
-# Ok ^ doesnt workk
-# new solution, if the new thing created is AXSystemDialog, then dont create a new yabai window
-# Edited `Appilcation.c` file, to filter the AXSystemDialog, and not create a new yabai window for it.
-# 
-# 1. renamed the official yabain binary to 'yabai_olc'
-# 2. copied the new yabai binary from ./src/yabai/bin/ to /opt/homebrew/Cellar/yabai/7.1.2/bin/
-# 3. If there is a new update, then I may or may not have to do this again.
-
-# ----------------------------------------------------------------------------------------
-
+yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
+yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
 # When a window is closed, focus on the recent window
-yabai -m signal --add event=window_destroyed \
-  action="yabai -m window --focus recent"
-
-# Ignore the Arc Settings window which has a title '$MYUSERNAME'
-# yabai -m signal --add \
-#   event=window_created \
-#   app='^Arc$' \
-#   title='^rOnInRaJ$' \
-#   action='yabai -m window $YABAI_WINDOW_ID --toggle float'
-
-
-# old method using the script stuff
 # yabai -m signal --add event=window_destroyed \
-#   action="yabai -m window --focus \$(yabai -m query --windows --space | jq .[0].id)"
+#   action="yabai -m window --focus mouse"
 
 
+# global settings
+yabai -m config layout                     bsp          \
+                window_placement           second_child \
+                mouse_follows_focus        on          \
+                focus_follows_mouse        off          \
+                window_zoom_persist        off          \
+                window_opacity             on           \
+                window_opacity_duration    0.0          \
+                active_window_opacity      0.93         \
+                normal_window_opacity      0.87         \
+                window_shadow              off          \
+                                                        \
+                auto_balance               off          \
+                window_animation_duration  0.0            \
+                split_ratio                0.50         \
+                                                        \
+                mouse_modifier             alt          \
+                mouse_action1              move         \
+                mouse_action2              resize       \
+                mouse_drop_action          swap         \
+                insert_feedback_color      0xff9dd274   \
+                                                        \
+                top_padding                12           \
+                bottom_padding             12           \
+                left_padding               12           \
+                right_padding              12           \
+                window_gap                 12
 
 
-# mouse settings
-
-
-# yabai -m config focus_follows_mouse autoraise
-yabai -m config mouse_modifier alt
-
-# left click + drag
-yabai -m config mouse_action1 move
-# right click + drag
-yabai -m config mouse_action2 resize
-
-
-
-# padding
-yabai -m config top_padding 10
-yabai -m config bottom_padding 10
-yabai -m config left_padding 10 
-yabai -m config right_padding 10
-yabai -m config window_gap 10
 
 
 # DISPLAY SETTINGS
-
 # Specify which display a newly created window should be managed in
 yabai -m config window_origin_display focused
 
 
+echo "yabai configuration loaded.."
 
 
 
-# BORDERS
-# borders active_color=0xf2e1e3e4 
-# inactive_color=0xff494d64 
-# width=7.0
+# Exclude problematic apps
+yabai -m rule --add app="^(Finder|Stats|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|App Store|Activity Monitor|Karabiner-Elements|Raycast)$" manage=off
+yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref|Recent|Downloads)" manage=off
+yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
+
+
+# Apps I choose to float and not managed
+# yabai -m rule --add app="^Calculator$" float=on layer=above
+yabai -m rule --add app="^Calendar$" manage=off
+yabai -m rule --add app="^Messages$" manage=off
 
 
 
-
-# Window modifications
-# yabai -m config window_opacity on
-# yabai -m config active_window_opacity 1.0
-# yabai -m config normal_window_opacity 0.5
-
-# yabai -m config window_shadow float
-
-yabai -m config window_opacity on
-yabai -m config active_window_opacity 0.2
-yabai -m config normal_window_opacity 0.5
-
-# disable specific apps
-
-# yabai -m rule --add app="^Discord$" manage=off
-# yabai -m rule --add app="^Spotify$" manage=off
-# yabai -m rule --add app="^WhatsApp$" manage=off
-# yabai -m rule --add app="^Finder$" manage=off
-yabai -m rule --add app="^System Settings$" manage=off
-# yabai -m rule --add app="^Slack$" manage=off
-yabai -m rule --add app="^java$" manage=off
-yabai -m rule --add app="java" manage=off
-# yabai -m rule --add app="^Arc$" mouse_follows_focus=off
-# yabai -m rule --add app="^Arc$" focus_follows_mouse=off
-
-# yabai -m rule --add app="^Arc$" subrole="AXSystemDialogRole" manage=off
-# yabai -m rule --add app="^Arc$" subrole="AXSystemDialog" manage=off
-# yabai -m rule --add app="^Arc$" title="\$MYUSERNAME" manage=off
+# move some apps automatically to specific spaces
+yabai -m rule --add app="Discord" space=^1
+yabai -m rule --add app="^Spotify$" space=^1
 
 
+# to add janky borders on active window
+# NOTE: keep at the bottom of this file
+borders
+
+yabai -m rule --apply
 
 

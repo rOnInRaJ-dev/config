@@ -4,20 +4,21 @@ export PATH="$PATH:/Users/raj/Library/Python/3.12/bin"
 export PATH="/usr/local/texlive/2024basic/bin/universal-darwin:$PATH"
 export PATH="/Library/TeX/texbin:$PATH"
 export PATH="$PATH:/opt/homebrew/bin/gradle/bin"
-export PATH=$PATH:/Users/raj/.config/drag
-export PATH=$PATH:/Users/raj/.spicetify
-export PATH=$PATH:/Applications/kitty.app/Contents/MacOs/kitty
+export PATH="$PATH:/Users/raj/.config/drag"
+export PATH="$PATH:/Users/raj/.spicetify"
+export PATH="$PATH:/Applications/kitty.app/Contents/MacOs/kitty"
 
+# Disable brew auto update
+export HOMEBREW_NO_AUTO_UPDATE=1
 
 # using GNU `ls` instead of BSD `ls`
 alias ls='/opt/homebrew/opt/coreutils/libexec/gnubin/ls'
 
 
-export MYUSERNAME="rOnInRaJ"
+export MYUSERNAME="rOnInRaJ" # lol idek y
 
 
 # `VIVID` colorscheme
-# export LS_COLORS="$(vivid generate catppuccin-mocha)"
 export LS_COLORS="$(vivid generate one-dark)"
 
 #PATH FOR JAVAFX
@@ -92,3 +93,13 @@ sync_zshrc() {
 # Run the function when Zsh starts
 sync_zshrc
 
+
+# Yazi functions
+function y() {
+	local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+	yazi "$@" --cwd-file="$tmp"
+	if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+		builtin cd -- "$cwd"
+	fi
+	rm -f -- "$tmp"
+}
