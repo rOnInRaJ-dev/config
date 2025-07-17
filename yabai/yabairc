@@ -4,18 +4,30 @@
 # Unload the macOS WindowManager process
 launchctl unload -F /System/Library/LaunchAgents/com.apple.WindowManager.plist > /dev/null 2>&1 &
 
+yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
 sudo yabai --load-sa
 
 
+
 # Signals
-yabai -m signal --add event=dock_did_restart action="sudo yabai --load-sa"
-yabai -m signal --add event=window_focused action="sketchybar --trigger window_focus"
+
+yabai -m signal --add event=window_focused action="sketchybar --trigger front_app_switched"
 yabai -m signal --add event=window_created action="sketchybar --trigger space_windows_change"
 yabai -m signal --add event=window_destroyed action="sketchybar --trigger space_windows_change"
 
+yabai -m signal --add event=window_moved action="sketchybar --trigger space_windows_change"
+yabai -m signal --add event=window_moved action="sketchybar --trigger space_change"
+
+
+yabai -m signal --add event=application_front_switched action="sketchybar --trigger space_change"
+
+yabai -m signal --add event=display_changed action="sketchybar --trigger display_change"
+yabai -m signal --add event=display_changed action="sketchybar --trigger space_windows_change"
+yabai -m signal --add event=space_changed action="sketchybar --trigger space_change"
+yabai -m signal --add event=space_changed action="sketchybar --trigger space_windows_change"
+
 yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 yabai -m signal --add event=window_destroyed action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
-yabai -m signal --add event=application_terminated action="yabai -m query --windows --window &> /dev/null || yabai -m window --focus mouse"
 
 # When a window is closed, focus on the recent window
 # yabai -m signal --add event=window_destroyed \
@@ -30,27 +42,30 @@ yabai -m config layout                     bsp          \
                 window_zoom_persist        off          \
                 window_opacity             on           \
                 window_opacity_duration    0.0          \
-                active_window_opacity      0.93         \
-                normal_window_opacity      0.87         \
-                window_shadow              off          \
+                active_window_opacity      0.99         \
+                normal_window_opacity      0.85         \
+                window_shadow              float        \
                                                         \
                 auto_balance               off          \
-                window_animation_duration  0.0            \
+                window_animation_duration  0.0          \
+                window_animation_easing    ease_out_expo\
                 split_ratio                0.50         \
                                                         \
-                mouse_modifier             alt          \
+                mouse_modifier             fn          \
                 mouse_action1              move         \
                 mouse_action2              resize       \
                 mouse_drop_action          swap         \
                 insert_feedback_color      0xff9dd274   \
                                                         \
-                top_padding                12           \
+                top_padding                10           \
                 bottom_padding             12           \
-                left_padding               12           \
-                right_padding              12           \
+                left_padding               10           \
+                right_padding              10           \
                 window_gap                 12
 
 
+# Align with the sketchybar height
+yabai -m config external_bar all:40:0
 
 
 # DISPLAY SETTINGS
@@ -64,7 +79,8 @@ echo "yabai configuration loaded.."
 
 # Exclude problematic apps
 yabai -m rule --add app="^(Finder|Stats|Software Update|Dictionary|VLC|System Preferences|System Settings|zoom.us|Photo Booth|Archive Utility|App Store|Activity Monitor|Karabiner-Elements|Raycast)$" manage=off
-yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref|Recent|Downloads)" manage=off
+# yabai -m rule --add label="Finder" app="^Finder$" title="(Co(py|nnect)|Move|Info|Pref|Recent|Downloads)" manage=off
+yabai -m rule --add label="Finder" app="^Finder$"  manage=off
 yabai -m rule --add label="About This Mac" app="System Information" title="About This Mac" manage=off
 
 
@@ -85,5 +101,3 @@ yabai -m rule --add app="^Spotify$" space=^1
 borders
 
 yabai -m rule --apply
-
-

@@ -8,6 +8,14 @@ export PATH="$PATH:/Users/raj/.config/drag"
 export PATH="$PATH:/Users/raj/.spicetify"
 export PATH="$PATH:/Applications/kitty.app/Contents/MacOs/kitty"
 
+
+# gpu/openmp stuff
+export CC=/opt/homebrew/opt/llvm/bin/clang
+export CXX=/opt/homebrew/opt/llvm/bin/clang++
+export LDFLAGS="-L/opt/homebrew/opt/llvm/lib"
+export CPPFLAGS="-I/opt/homebrew/opt/llvm/include"
+export PATH="/opt/homebrew/opt/llvm/bin:$PATH"
+
 # Disable brew auto update
 export HOMEBREW_NO_AUTO_UPDATE=1
 
@@ -103,3 +111,7 @@ function y() {
 	fi
 	rm -f -- "$tmp"
 }
+
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
