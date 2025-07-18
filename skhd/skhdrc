@@ -97,8 +97,8 @@ ctrl + alt -s: yabai -m window --toggle split
 
 
 # change current space focused
-ctrl - h: yabai -m space --focus prev
-ctrl - l: yabai -m space --focus next || {yabai -m space --create; yabai -m space --focus next}
+ctrl - h -> : yabai -m space --focus prev
+ctrl - l -> : yabai -m space --focus next || {yabai -m space --create; yabai -m space --focus next}
 
 
 ctrl - j: yabai -m display --focus prev

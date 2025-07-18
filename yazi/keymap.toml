@@ -5,7 +5,7 @@ prepend_keymap = [
   { on = ["S"], run = 'shell "$SHELL" ~ --block', desc = "Open $SHELL here" },
 
   # Open a finder in current directory
-  { on = ["o"], run = 'shell open $0 --block', desc = "Reveal in finder"},
+  { on = ["o"], run = 'open', desc = "Reveal in finder"},
 
 
   # navigation
@@ -14,8 +14,11 @@ prepend_keymap = [
   { on = "<S-J>", run = "arrow 25%" },
   { on = "<S-K>", run = "arrow -25%" },
 
-  # shortcuts to directories
+
+  # Shortcuts to directories
 	{ on = [ "s", "c" ],       run = "cd ~/.config",   desc = "Go ~/.config" },
+	{ on = [ "s", "r" ],       run = "cd ~/OneDrive/Raj_school_work/UNIVERSITY/solar_racing",   desc = "Go ../solar_racing" },
+	{ on = [ "s", "p" ],       run = "cd ~/programming/",   desc = "Go ~/.config" },
 
   # plugins
   { on = "T", run = "plugin max-preview", desc = "Maximise or restore preview" },

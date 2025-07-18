@@ -36,6 +36,7 @@ prepend_previewers = [
 [opener]
 edit = [
     { run = 'nvim "$@"', desc = "NeoVim", block = true, for = "unix" },
+    { run = 'code "$@"', desc = "VSCode", block = true, for = "unix" },
 ]
 open = [
 	{ run = 'open "$@"', desc = "Open", orphan = true, for = "macos" },
@@ -60,6 +61,7 @@ prepend_rules = [
 #     # Empty file
 #     { mime = "inode/empty", use = ["edit", "reveal"] },
 #     # Fallback
+    { name = "*/", use = ["reveal", "edit"] },
     { name = "*", use = ["edit", "open", "reveal"] },
 ]
 

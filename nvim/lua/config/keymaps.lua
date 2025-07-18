@@ -55,3 +55,9 @@ vim.keymap.set("n", "/", "/\\v", { noremap = true, silent = true })
 -- YANKY keymaps
 vim.keymap.set("n", "<c-p>", "<Plug>(YankyPreviousEntry)")
 vim.keymap.set("n", "<c-n>", "<Plug>(YankyNextEntry)")
+
+-- Move to window using <ctrl-shift> hjkl keys
+vim.keymap.set("n", "<Left>", "<C-w>h", { desc = "Go to Left Window", remap = true })
+vim.keymap.set("n", "<Down>", "<C-w>j", { desc = "Go to Lower Window", remap = true })
+vim.keymap.set("n", "<Up>", "<C-w>k", { desc = "Go to Upper Window", remap = true })
+vim.keymap.set("n", "<Right>", "<C-w>l", { desc = "Go to Right Window", remap = true })
