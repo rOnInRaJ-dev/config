@@ -3,12 +3,9 @@
 -- Add any additional keymaps here
 
 -- Example of a keyremapping idk idc what it does
-vim.keymap.set(
-  "n",
-  "<leader>sx",
-  require("telescope.builtin").resume,
-  { noremap = true, silent = true, desc = "Resume" }
-)
+vim.keymap.set("n", "<leader>sx", function()
+  require("telescope.builtin").resume()
+end, { noremap = true, silent = true, desc = "Resume Telescope" })
 
 -- set <leader>uS to spell_suggest
 vim.keymap.set(

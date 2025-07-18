@@ -92,8 +92,8 @@ yabai -m rule --add app="^Messages$" manage=off
 
 
 # move some apps automatically to specific spaces
-yabai -m rule --add app="Discord" space=^1
-yabai -m rule --add app="^Spotify$" space=^1
+# yabai -m rule --add app="Discord" space=^1
+# yabai -m rule --add app="^Spotify$" space=^1
 
 
 # to add janky borders on active window

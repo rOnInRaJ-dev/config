@@ -1,0 +1,37 @@
+[mgr] # - File list.
+prepend_keymap = [
+
+  # Open a shell in current directory
+  { on = ["S"], run = 'shell "$SHELL" ~ --block', desc = "Open $SHELL here" },
+
+  # Open a finder in current directory
+  { on = ["o"], run = 'shell open $0 --block', desc = "Reveal in finder"},
+
+
+  # navigation
+  { on = "l", run = "plugin smart-enter" },
+  # { on = "<S-J>", run = "cd ~" },
+  { on = "<S-J>", run = "arrow 25%" },
+  { on = "<S-K>", run = "arrow -25%" },
+
+  # shortcuts to directories
+	{ on = [ "s", "c" ],       run = "cd ~/.config",   desc = "Go ~/.config" },
+
+  # plugins
+  { on = "T", run = "plugin max-preview", desc = "Maximise or restore preview" },
+
+]
+
+[tasks] # - Task manager.
+
+[spot] # - File information spotter.
+
+[pick] # - Pick component. e.g. "open with" for files.
+
+[input] # - Input component. e.g. create, rename, etc.
+
+[confirm] # - Confirmation dialog. e.g. remove, overwrite, etc.
+
+[cmp] # - Completion component. e.g. "cd" path completion.
+
+[help] # - Help menu.
